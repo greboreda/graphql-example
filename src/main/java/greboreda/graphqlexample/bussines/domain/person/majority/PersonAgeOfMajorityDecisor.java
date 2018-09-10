@@ -2,10 +2,10 @@ package greboreda.graphqlexample.bussines.domain.person.majority;
 
 import greboreda.graphqlexample.bussines.domain.Country;
 import greboreda.graphqlexample.bussines.domain.person.Person;
+import greboreda.graphqlexample.bussines.domain.person.PersonId;
 import org.apache.commons.lang3.Validate;
 
 import java.time.LocalDate;
-import java.time.Period;
 import java.util.Optional;
 
 public class PersonAgeOfMajorityDecisor {
@@ -20,24 +20,52 @@ public class PersonAgeOfMajorityDecisor {
 		this.countriesAgesOfMajority = countriesAgesOfMajority;
 	}
 
-	public interface HasMajority {
-		Optional<Boolean> at(LocalDate date);
+	public interface HasMajorityIn {
+		Optional<PersonAgeOfMajorityAtCountry> in(Country country);
 	}
 
-	public HasMajority hasAgeOfMajorityIn(Country country) {
-		return date -> whenHasMajorityAgeIn(country).map(d -> !d.isAfter(date));
+	public HasMajorityIn hasMajority() {
+		return country -> {
+			final Optional<CountryAgeOfMajority> maybe = countriesAgesOfMajority.stream()
+					.filter(cam -> cam.getCountry() == country)
+					.findAny();
+			if(!maybe.isPresent()) {
+				return Optional.empty();
+			}
+			final CountryAgeOfMajority countryAgeOfMajority = maybe.get();
+			final PersonId id = person.getId();
+			final LocalDate whenHas = person.getAge().whenHas(countryAgeOfMajority.getNeededLife());
+			return Optional.of(new PersonAgeOfMajorityAtCountry(id, country, whenHas));
+		};
 	}
 
-	public Optional<LocalDate> whenHasMajorityAgeIn(Country country) {
-		return majorityLifeAt(country)
-				.map(l -> person.getAge().whenHas(l));
-	}
+	public static class PersonAgeOfMajorityAtCountry {
 
-	private Optional<Period> majorityLifeAt(Country country) {
-		return countriesAgesOfMajority.stream()
-				.filter(a -> a.getCountry() == country)
-				.map(CountryAgeOfMajority::getLife)
-				.findAny();
+		private final PersonId personId;
+		private final Country country;
+		private final LocalDate majorityAgeDate;
+
+		private PersonAgeOfMajorityAtCountry(PersonId personId, Country country, LocalDate majorityAgeDate) {
+			this.personId = personId;
+			this.country = country;
+			this.majorityAgeDate = majorityAgeDate;
+		}
+
+		public PersonId getPersonId() {
+			return personId;
+		}
+
+		public Country getCountry() {
+			return country;
+		}
+
+		public LocalDate getMajorityAgeDate() {
+			return majorityAgeDate;
+		}
+
+		public boolean hasAgeOfMajorityAt(LocalDate date) {
+			return !getMajorityAgeDate().isAfter(date);
+		}
 	}
 
 }

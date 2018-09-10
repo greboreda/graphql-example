@@ -13,8 +13,8 @@ import static java.util.stream.Collectors.toList;
 public class CountriesAgesOfMajorityFinder {
 
 	private static final CountriesAgesOfMajority countriesAgesOfMajority = CountriesAgesOfMajority.create()
-			.with(CountryAgeOfMajority.create().withCountry(Country.SPAIN).withLife(Period.ofYears(18)))
-			.with(CountryAgeOfMajority.create().withCountry(Country.USA).withLife(Period.ofYears(21)))
+			.with(CountryAgeOfMajority.create().withCountry(Country.SPAIN).withNeededLife(Period.ofYears(18)))
+			.with(CountryAgeOfMajority.create().withCountry(Country.USA).withNeededLife(Period.ofYears(21)))
 			.build();
 
 

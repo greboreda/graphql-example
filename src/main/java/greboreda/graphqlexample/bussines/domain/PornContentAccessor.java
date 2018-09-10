@@ -1,34 +1,46 @@
 package greboreda.graphqlexample.bussines.domain;
 
+import greboreda.graphqlexample.bussines.domain.person.Person;
 import greboreda.graphqlexample.bussines.domain.person.majority.CountriesAgesOfMajority;
 import greboreda.graphqlexample.bussines.domain.person.majority.CountriesAgesOfMajorityFinder;
-import greboreda.graphqlexample.bussines.domain.person.majority.PersonAgeOfMajorityDecisor;
-import greboreda.graphqlexample.bussines.domain.person.majority.CountryAgeOfMajority;
-import greboreda.graphqlexample.bussines.domain.person.Person;
+import greboreda.graphqlexample.bussines.domain.person.majority.PersonAgeOfMajorityDecisor.PersonAgeOfMajorityAtCountry;
+import greboreda.graphqlexample.infrasctructure.TimeFactory;
+import org.jetbrains.annotations.NotNull;
 
 import java.time.LocalDate;
-import java.time.Period;
-import java.util.Arrays;
-import java.util.List;
+import java.util.function.Supplier;
 
 public class PornContentAccessor {
 
-	private final CountriesAgesOfMajorityFinder countriesAgesOfMajorityFinder = new CountriesAgesOfMajorityFinder();
+	private final TimeFactory timeFactory;
+	private final CountriesAgesOfMajorityFinder countriesAgesOfMajorityFinder;
+
+	public PornContentAccessor(TimeFactory timeFactory, CountriesAgesOfMajorityFinder countriesAgesOfMajorityFinder) {
+		this.timeFactory = timeFactory;
+		this.countriesAgesOfMajorityFinder = countriesAgesOfMajorityFinder;
+	}
 
 	public PornContentAccess retrieveAccess(Person person, Country country) {
+		final PersonAgeOfMajorityAtCountry personAgeOfMajorityAtCountry = retrievePersonAgeOfMajorityAtCountry(person, country);
+		final boolean hasAccess = personAgeOfMajorityAtCountry.hasAgeOfMajorityAt(now());
+		return new PornContentAccess(hasAccess, personAgeOfMajorityAtCountry.getMajorityAgeDate());
+	}
 
+	private LocalDate now() {
+		return timeFactory.currentLocalDate();
+	}
+
+	@NotNull
+	private PersonAgeOfMajorityAtCountry retrievePersonAgeOfMajorityAtCountry(Person person, Country country) {
 		final CountriesAgesOfMajority countriesAgesOfMajority = countriesAgesOfMajorityFinder.findFor(country);
-		final PersonAgeOfMajorityDecisor ageOfMajority = person.ageOfMajority(countriesAgesOfMajority);
+		return person.ageOfMajority(countriesAgesOfMajority)
+				.hasMajority()
+				.in(country)
+				.orElseThrow(canNotDecideError());
+	}
 
-		final boolean isMajor = ageOfMajority.hasAgeOfMajorityIn(country).at(LocalDate.now());
-
-		final LocalDate whenCanAccess = ageOfMajority.whenHasMajorityAgeIn(Country.SPAIN);
-
-		if(isMajor) {
-			return new PornContentAccess(true, whenCanAccess);
-		} else {
-			return new PornContentAccess(false, whenCanAccess);
-		}
+	private Supplier<RuntimeException> canNotDecideError() {
+		return () -> new IllegalStateException("can not decide");
 	}
 
 	public static class PornContentAccess {

@@ -7,19 +7,19 @@ import java.time.Period;
 public class CountryAgeOfMajority {
 
 	private final Country country;
-	private final Period life;
+	private final Period neededLife;
 
-	private CountryAgeOfMajority(Country country, Period life) {
+	private CountryAgeOfMajority(Country country, Period needeLife) {
 		this.country = country;
-		this.life = life;
+		this.neededLife = needeLife;
 	}
 
 	public Country getCountry() {
 		return country;
 	}
 
-	public Period getLife() {
-		return life;
+	public Period getNeededLife() {
+		return neededLife;
 	}
 
 	public static CountryAgeOfMajorityBuilder create() {
@@ -28,14 +28,14 @@ public class CountryAgeOfMajority {
 
 	public static class CountryAgeOfMajorityBuilder {
 		@FunctionalInterface
-		public interface StepLife {
-			CountryAgeOfMajority withLife(Period life);
+		public interface StepNeededLife {
+			CountryAgeOfMajority withNeededLife(Period neededLife);
 		}
 		private CountryAgeOfMajorityBuilder() {
 
 		}
-		public StepLife withCountry(Country country) {
-			return life -> new CountryAgeOfMajority(country, life);
+		public StepNeededLife withCountry(Country country) {
+			return neededLife -> new CountryAgeOfMajority(country, neededLife);
 		}
 	}
 }

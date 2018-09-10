@@ -6,6 +6,7 @@ import greboreda.graphqlexample.bussines.domain.person.Person;
 import greboreda.graphqlexample.bussines.domain.person.PersonId;
 import greboreda.graphqlexample.bussines.domain.person.majority.CountriesAgesOfMajority;
 import greboreda.graphqlexample.bussines.domain.person.majority.CountryAgeOfMajority;
+import greboreda.graphqlexample.bussines.domain.person.majority.PersonAgeOfMajorityDecisor.PersonAgeOfMajorityAtCountry;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.RandomUtils;
 import org.jetbrains.annotations.NotNull;
@@ -18,6 +19,7 @@ import java.time.Period;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 class PersonTest {
 
@@ -40,29 +42,25 @@ class PersonTest {
 	}
 
 	@Test
-	@DisplayName("should have reached age of majority when has 18 years")
-	void test3() {
-		final Person person = aPersonBornAt(LocalDate.of(2000, Month.JANUARY, 1));
-
-		//assertThat(person.hasReachedAgeOfMajorityAt(LocalDate.of(2018, Month.JANUARY, 1)), is(true));
-	}
-
-	@Test
 	@DisplayName("should have reached age of majority if has greater age than legal age in country")
-	void test4() {
+	void test3() {
 
 		final Person person = aPersonBornAt(LocalDate.of(2000, Month.JANUARY, 1));
 		final CountriesAgesOfMajority countriesAgesOfMajority = CountriesAgesOfMajority.create()
-				.with(CountryAgeOfMajority.create().withCountry(Country.SPAIN).withLife(Period.ofYears(18)))
-				.with(CountryAgeOfMajority.create().withCountry(Country.USA).withLife(Period.ofYears(21)))
+				.with(CountryAgeOfMajority.create().withCountry(Country.SPAIN).withNeededLife(Period.ofYears(18)))
+				.with(CountryAgeOfMajority.create().withCountry(Country.USA).withNeededLife(Period.ofYears(21)))
 				.build();
 
-		final Boolean hasReachedAgeOfMajority = person.ageOfMajority(countriesAgesOfMajority)
-				.hasAgeOfMajorityIn(Country.SPAIN)
-				.at(LocalDate.of(2018, Month.JANUARY, 1))
+		final PersonAgeOfMajorityAtCountry decision = person.ageOfMajority(countriesAgesOfMajority)
+				.hasMajority()
+				.in(Country.SPAIN)
 				.orElseThrow(RuntimeException::new);
 
-		assertThat(hasReachedAgeOfMajority, is(true));
+		assertAll(
+				() -> assertThat(decision.hasAgeOfMajorityAt(LocalDate.of(2018, Month.JANUARY, 1)), is(true)),
+				() -> assertThat(decision.getMajorityAgeDate(), is(LocalDate.of(2018, Month.JANUARY, 1)))
+		);
+
 	}
 
 	@NotNull
