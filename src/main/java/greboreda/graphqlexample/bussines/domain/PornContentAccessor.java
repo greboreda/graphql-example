@@ -1,7 +1,9 @@
 package greboreda.graphqlexample.bussines.domain;
 
-import greboreda.graphqlexample.bussines.domain.person.AgeOfMajority;
-import greboreda.graphqlexample.bussines.domain.person.AgeOfMajorityLocated;
+import greboreda.graphqlexample.bussines.domain.person.majority.CountriesAgesOfMajority;
+import greboreda.graphqlexample.bussines.domain.person.majority.CountriesAgesOfMajorityFinder;
+import greboreda.graphqlexample.bussines.domain.person.majority.PersonAgeOfMajorityDecisor;
+import greboreda.graphqlexample.bussines.domain.person.majority.CountryAgeOfMajority;
 import greboreda.graphqlexample.bussines.domain.person.Person;
 
 import java.time.LocalDate;
@@ -11,10 +13,15 @@ import java.util.List;
 
 public class PornContentAccessor {
 
-	public PornContentAccess retrieveAccess(Person person) {
+	private final CountriesAgesOfMajorityFinder countriesAgesOfMajorityFinder = new CountriesAgesOfMajorityFinder();
 
-		final AgeOfMajority ageOfMajority = person.ageOfMajority(findLocs());
-		final boolean isMajor = ageOfMajority.hasAgeOfMajorityIn(Country.SPAIN).at(LocalDate.now());
+	public PornContentAccess retrieveAccess(Person person, Country country) {
+
+		final CountriesAgesOfMajority countriesAgesOfMajority = countriesAgesOfMajorityFinder.findFor(country);
+		final PersonAgeOfMajorityDecisor ageOfMajority = person.ageOfMajority(countriesAgesOfMajority);
+
+		final boolean isMajor = ageOfMajority.hasAgeOfMajorityIn(country).at(LocalDate.now());
+
 		final LocalDate whenCanAccess = ageOfMajority.whenHasMajorityAgeIn(Country.SPAIN);
 
 		if(isMajor) {
@@ -22,13 +29,6 @@ public class PornContentAccessor {
 		} else {
 			return new PornContentAccess(false, whenCanAccess);
 		}
-	}
-
-	private List<AgeOfMajorityLocated> findLocs() {
-		return Arrays.asList(
-				new AgeOfMajorityLocated(Country.SPAIN, Period.ofYears(18)),
-				new AgeOfMajorityLocated(Country.USA, Period.ofYears(21))
-		);
 	}
 
 	public static class PornContentAccess {

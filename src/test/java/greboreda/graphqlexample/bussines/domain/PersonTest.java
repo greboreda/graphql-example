@@ -2,9 +2,10 @@ package greboreda.graphqlexample.bussines.domain;
 
 
 import greboreda.graphqlexample.bussines.domain.ddd.valueobjects.Name;
-import greboreda.graphqlexample.bussines.domain.person.AgeOfMajorityLocated;
 import greboreda.graphqlexample.bussines.domain.person.Person;
 import greboreda.graphqlexample.bussines.domain.person.PersonId;
+import greboreda.graphqlexample.bussines.domain.person.majority.CountriesAgesOfMajority;
+import greboreda.graphqlexample.bussines.domain.person.majority.CountryAgeOfMajority;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.RandomUtils;
 import org.jetbrains.annotations.NotNull;
@@ -14,9 +15,6 @@ import org.junit.jupiter.api.Test;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.Period;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Locale;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
@@ -54,18 +52,17 @@ class PersonTest {
 	void test4() {
 
 		final Person person = aPersonBornAt(LocalDate.of(2000, Month.JANUARY, 1));
+		final CountriesAgesOfMajority countriesAgesOfMajority = CountriesAgesOfMajority.create()
+				.with(CountryAgeOfMajority.create().withCountry(Country.SPAIN).withLife(Period.ofYears(18)))
+				.with(CountryAgeOfMajority.create().withCountry(Country.USA).withLife(Period.ofYears(21)))
+				.build();
 
-		List<AgeOfMajorityLocated> locs = Arrays.asList(
-				new AgeOfMajorityLocated(Country.SPAIN, Period.ofYears(18)),
-				new AgeOfMajorityLocated(Country.USA, Period.ofYears(21))
-		);
-
-		final boolean hasReachedMajority = person.ageOfMajority(locs)
+		final Boolean hasReachedAgeOfMajority = person.ageOfMajority(countriesAgesOfMajority)
 				.hasAgeOfMajorityIn(Country.SPAIN)
-				.at(LocalDate.of(2018, Month.JANUARY, 1));
+				.at(LocalDate.of(2018, Month.JANUARY, 1))
+				.orElseThrow(RuntimeException::new);
 
-		assertThat(hasReachedMajority, is(true));
-
+		assertThat(hasReachedAgeOfMajority, is(true));
 	}
 
 	@NotNull

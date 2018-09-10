@@ -3,13 +3,12 @@ package greboreda.graphqlexample.bussines.domain.person;
 import greboreda.graphqlexample.bussines.domain.ddd.Entity;
 import greboreda.graphqlexample.bussines.domain.ddd.valueobjects.Age;
 import greboreda.graphqlexample.bussines.domain.ddd.valueobjects.Name;
+import greboreda.graphqlexample.bussines.domain.person.majority.CountriesAgesOfMajority;
+import greboreda.graphqlexample.bussines.domain.person.majority.PersonAgeOfMajorityDecisor;
 
 import java.time.LocalDate;
-import java.util.List;
 
 public class Person implements Entity<PersonId> {
-
-	//private static final int MAJORITY_AGE_NEEDED_YEARS = 18;
 
 	private final PersonId id;
 	private final Name name;
@@ -34,19 +33,8 @@ public class Person implements Entity<PersonId> {
 		return new Age(birthDate);
 	}
 
-/*
-	public LocalDate majorityAge() {
-		return getAge().whenHas(Period.ofYears(MAJORITY_AGE_NEEDED_YEARS));
-	}
-
-	public boolean hasReachedAgeOfMajorityAt(LocalDate date) {
-		final LocalDate majorityAge = majorityAge();
-		return majorityAge.isEqual(date) || majorityAge.isAfter(date);
-	}
-*/
-
-	public AgeOfMajority ageOfMajority(List<AgeOfMajorityLocated> agesOfMajorityLocated) {
-		return new AgeOfMajority(this, agesOfMajorityLocated);
+	public PersonAgeOfMajorityDecisor ageOfMajority(CountriesAgesOfMajority countriesAgesOfMajority) {
+		return new PersonAgeOfMajorityDecisor(this, countriesAgesOfMajority);
 	}
 
 	public LocalDate nextBirthDayAfter(LocalDate after) {
