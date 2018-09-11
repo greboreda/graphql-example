@@ -1,18 +1,15 @@
 package greboreda.graphqlexample.bussines.domain.person;
 
 import greboreda.graphqlexample.bussines.domain.ddd.Id;
+import org.apache.commons.lang3.Validate;
 
 public class PersonId implements Id<Integer> {
 
 	private final Integer value;
 
 	private PersonId(Integer value) {
-		if(value == null) {
-			throw new NullPointerException("value can not be null");
-		}
-		if(value <= 0) {
-			throw new IllegalArgumentException("PersonIds must have vale greater than zero");
-		}
+		Validate.notNull(value);
+		Validate.isTrue(value > 0, "value must be positive");
 		this.value = value;
 	}
 
