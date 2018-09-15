@@ -14,8 +14,8 @@ public class Id<P extends Primitive> implements ValueObject {
 		return value;
 	}
 
-	public boolean matches(P another) {
-		return this.value.equals(another);
+	public boolean matches(Id<P> another) {
+		return this.value.equals(another.value);
 	}
 
 
