@@ -1,4 +1,4 @@
-package greboreda.graphqlexample.api;
+package greboreda.graphqlexample.config;
 
 import graphql.execution.AsyncExecutionStrategy;
 import graphql.execution.ExecutionStrategy;
@@ -8,7 +8,9 @@ import graphql.servlet.SimpleGraphQLServlet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
+@Configuration
 public class GraphQLConfig {
 
 	@Autowired

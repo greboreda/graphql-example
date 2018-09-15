@@ -1,14 +1,22 @@
-scalar Date
 
-type Person {
-    name: String!
-    birthDate: Date!
+type Musician {
+    completeName: String!
+    alias: String!
+    birthDate: String!
+    instrument: String!
 }
 
-type PersonQuery {
-    findAllPersons: [Person]!
+type Band {
+    id: ID!,
+    name: String!
+    style: [String]!
+    members: [Musician]!
+}
+
+type BandQuery {
+    findBandById(bandId: Int!): Band
 }
 
 schema {
-    query: PersonQuery
+    query: BandQuery
 }
