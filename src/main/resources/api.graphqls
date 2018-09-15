@@ -9,7 +9,7 @@ type Musician {
 type Band {
     id: ID!,
     name: String!
-    style: [String]!
+    styles: [String]!
     members: [Musician]!
 }
 

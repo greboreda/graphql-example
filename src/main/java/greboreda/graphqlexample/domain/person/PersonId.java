@@ -1,7 +1,7 @@
 package greboreda.graphqlexample.domain.person;
 
-import greboreda.graphqlexample.ddd.valueobjects.Id;
-import greboreda.graphqlexample.ddd.valueobjects.primitves.UUIDValue;
+import greboreda.graphqlexample.business.ddd.Id;
+import greboreda.graphqlexample.business.ddd.primitves.UUIDValue;
 
 import java.util.UUID;
 

@@ -1,6 +1,6 @@
 package greboreda.graphqlexample.domain.person.nationality;
 
-import greboreda.graphqlexample.ddd.valueobjects.ValueObject;
+import greboreda.graphqlexample.business.ddd.ValueObject;
 import greboreda.graphqlexample.domain.politics.Country;
 
 public class Nationality implements ValueObject {

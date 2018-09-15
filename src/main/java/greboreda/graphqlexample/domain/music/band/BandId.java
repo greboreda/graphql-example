@@ -1,7 +1,7 @@
 package greboreda.graphqlexample.domain.music.band;
 
-import greboreda.graphqlexample.ddd.valueobjects.Id;
-import greboreda.graphqlexample.ddd.valueobjects.primitves.IntValue;
+import greboreda.graphqlexample.business.ddd.Id;
+import greboreda.graphqlexample.business.ddd.primitves.IntValue;
 
 public class BandId extends Id<IntValue> {
 

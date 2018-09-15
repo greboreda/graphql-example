@@ -11,7 +11,6 @@ import greboreda.graphqlexample.domain.person.Person;
 import greboreda.graphqlexample.domain.person.nationality.Nationalities;
 import greboreda.graphqlexample.domain.person.nationality.Nationality;
 import greboreda.graphqlexample.domain.politics.Country;
-import org.apache.commons.lang3.RandomUtils;
 
 import java.time.LocalDate;
 import java.time.Month;

@@ -1,6 +1,6 @@
-package greboreda.graphqlexample.ddd.valueobjects;
+package greboreda.graphqlexample.business.ddd;
 
-import greboreda.graphqlexample.ddd.valueobjects.primitves.Primitive;
+import greboreda.graphqlexample.business.ddd.primitves.Primitive;
 
 public class Id<P extends Primitive> implements ValueObject {
 

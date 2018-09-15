@@ -1,6 +1,6 @@
 package greboreda.graphqlexample.domain.politics;
 
-import greboreda.graphqlexample.ddd.valueobjects.ValueObject;
+import greboreda.graphqlexample.business.ddd.ValueObject;
 
 import java.util.Locale;
 

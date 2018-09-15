@@ -1,6 +1,6 @@
 package greboreda.graphqlexample.domain.music.musician;
 
-import greboreda.graphqlexample.ddd.valueobjects.ValueObject;
+import greboreda.graphqlexample.business.ddd.ValueObject;
 
 public enum Instrument implements ValueObject {
 	VOICE,

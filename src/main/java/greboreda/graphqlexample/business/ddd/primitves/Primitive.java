@@ -1,4 +1,4 @@
-package greboreda.graphqlexample.ddd.valueobjects.primitves;
+package greboreda.graphqlexample.business.ddd.primitves;
 
 public abstract class Primitive<V> {
 

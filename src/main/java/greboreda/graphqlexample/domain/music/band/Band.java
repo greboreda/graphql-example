@@ -1,6 +1,6 @@
 package greboreda.graphqlexample.domain.music.band;
 
-import greboreda.graphqlexample.ddd.valueobjects.Entity;
+import greboreda.graphqlexample.business.ddd.Entity;
 import greboreda.graphqlexample.domain.aspects.Nameable;
 import greboreda.graphqlexample.domain.valueobjects.Name;
 

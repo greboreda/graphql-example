@@ -1,4 +1,4 @@
-package greboreda.graphqlexample.ddd.valueobjects.primitves;
+package greboreda.graphqlexample.business.ddd.primitves;
 
 public class IntValue extends Primitive<Integer> {
 

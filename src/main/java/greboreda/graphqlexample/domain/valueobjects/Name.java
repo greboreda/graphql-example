@@ -1,8 +1,8 @@
 package greboreda.graphqlexample.domain.valueobjects;
 
 
-import greboreda.graphqlexample.ddd.valueobjects.ValueObject;
-import greboreda.graphqlexample.ddd.valueobjects.primitves.StringValue;
+import greboreda.graphqlexample.business.ddd.ValueObject;
+import greboreda.graphqlexample.business.ddd.primitves.StringValue;
 
 public class Name extends StringValue implements ValueObject {
 
