@@ -1,0 +1,14 @@
+scalar Date
+
+type Person {
+    name: String!
+    birthDate: Date!
+}
+
+type PersonQuery {
+    findAllPersons: [Person]!
+}
+
+schema {
+    query: PersonQuery
+}
