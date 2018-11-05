@@ -1,4 +1,4 @@
-package greboreda.graphqlexample.api;
+package greboreda.graphqlexample.api.beans;
 
 import java.util.Collection;
 

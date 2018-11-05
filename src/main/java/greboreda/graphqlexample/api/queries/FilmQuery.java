@@ -1,6 +1,8 @@
-package greboreda.graphqlexample.api;
+package greboreda.graphqlexample.api.queries;
 
 import com.coxautodev.graphql.tools.GraphQLQueryResolver;
+import greboreda.graphqlexample.api.repository.FilmRepository;
+import greboreda.graphqlexample.api.beans.FilmApi;
 
 import javax.inject.Inject;
 import javax.inject.Named;

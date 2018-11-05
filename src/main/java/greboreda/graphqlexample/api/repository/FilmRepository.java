@@ -1,4 +1,7 @@
-package greboreda.graphqlexample.api;
+package greboreda.graphqlexample.api.repository;
+
+import greboreda.graphqlexample.api.beans.ActorApi;
+import greboreda.graphqlexample.api.beans.FilmApi;
 
 import javax.inject.Named;
 import java.util.ArrayList;
