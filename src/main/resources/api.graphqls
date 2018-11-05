@@ -1,22 +1,18 @@
 
-type Musician {
-    completeName: String!
-    alias: String!
-    birthDate: String!
-    instrument: String!
+type Film {
+    title: String!
+    year: Int!
+    starring: [Actor]!
 }
 
-type Band {
-    id: ID!,
+type Actor {
     name: String!
-    styles: [String]!
-    members: [Musician]!
 }
 
-type BandQuery {
-    findBandById(bandId: Int!): Band
+type FilmQuery {
+    findFilmById(filmId: ID!): Film
 }
 
 schema {
-    query: BandQuery
+    query: FilmQuery
 }
