@@ -4,3 +4,10 @@ server:
 spring:
   application:
     name: films
+
+graphql:
+  servlet:
+    mapping: /graphql
+
+graphiql:
+  mapping: /graphiql
