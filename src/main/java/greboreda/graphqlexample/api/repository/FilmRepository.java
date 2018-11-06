@@ -2,6 +2,7 @@ package greboreda.graphqlexample.api.repository;
 
 import greboreda.graphqlexample.api.beans.ActorApi;
 import greboreda.graphqlexample.api.beans.FilmApi;
+import greboreda.graphqlexample.api.beans.ReviewApi;
 
 import javax.inject.Named;
 import java.util.ArrayList;
@@ -22,17 +23,10 @@ public class FilmRepository {
 
 		final ActorApi jeff = new ActorApi();
 		jeff.name = "Jeff Bridges";
-		jeff.firstName = "Jeff";
-		jeff.lastName = "Bridges";
 		final ActorApi john = new ActorApi();
 		john.name = "John Goodman";
-		john.firstName = "John";
-		john.lastName = "Goodman";
 		final ActorApi steve = new ActorApi();
 		steve.name = "Steve Buscemi";
-		steve.firstName = "Steve";
-		steve.lastName = "Buscemi";
-
 
 		bigLebowski.starring = Arrays.asList(jeff, john, steve);
 
@@ -43,4 +37,13 @@ public class FilmRepository {
 		return films.stream().filter(f -> f.id.equals(filmId)).findFirst();
 	}
 
+	public FilmApi appendReview(Integer filmId, ReviewApi reviewApi) {
+		final Optional<FilmApi> maybeFilm = findFilmById(filmId);
+		if(!maybeFilm.isPresent()) {
+			throw new IllegalArgumentException("not found");
+		}
+		final FilmApi film = maybeFilm.get();
+		film.reviews.add(reviewApi);
+		return film;
+	}
 }

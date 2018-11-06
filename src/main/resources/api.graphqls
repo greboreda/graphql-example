@@ -3,18 +3,38 @@ type Film {
     title: String!
     year: Int!
     starring: [Actor]!
+    reviews: [Review]!
 }
 
 type Actor {
-    name: String! @deprecated(reason: "Use 'firstName' and 'lastName'")
-    firstName: String!
-    lastName: String!
+    name: String!
+}
+
+type Review {
+    author: String!
+    commentary: String!
+    stars: Int!
 }
 
 type FilmQuery {
     findFilmById(filmId: ID!): Film
 }
 
+input ReviewCreation {
+    author: String!
+    commentary: String!
+    stars: Stars
+}
+
+enum Stars {
+    ONE TWO THREE FOUR FIVE
+}
+
+type FilmMutation {
+    createReview(filmId: ID!, review: ReviewCreation!): Film!
+}
+
 schema {
     query: FilmQuery
+    mutation: FilmMutation
 }
