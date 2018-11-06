@@ -23,10 +23,17 @@ public class FilmRepository {
 
 		final ActorApi jeff = new ActorApi();
 		jeff.name = "Jeff Bridges";
+		jeff.firstName = "Jeff";
+		jeff.lastName = "Bridges";
 		final ActorApi john = new ActorApi();
 		john.name = "John Goodman";
+		john.firstName = "John";
+		john.lastName = "Goodman";
 		final ActorApi steve = new ActorApi();
 		steve.name = "Steve Buscemi";
+		steve.firstName = "Steve";
+		steve.lastName = "Buscemi";
+
 
 		bigLebowski.starring = Arrays.asList(jeff, john, steve);
 
