@@ -8,7 +8,6 @@ type Film {
 
 type Actor {
     name: String!
-    name: String!
 }
 
 type Review {
