@@ -7,8 +7,6 @@ type Film {
 
 type Actor {
     name: String! @deprecated(reason: "Use 'firstName' and 'lastName'")
-    firstName: String!
-    lastName: String!
 }
 
 type FilmQuery {
